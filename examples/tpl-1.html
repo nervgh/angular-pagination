@@ -1,0 +1,5 @@
+<ul class="pagination">
+    <li ng-repeat="page in pagination.pages track by $index" ng-class="{active: pagination.isCurrent(page)}" ng-click="pagination.setCurrent(page)">
+        <a href ng-bind="page"></a>
+    </li>
+</ul>

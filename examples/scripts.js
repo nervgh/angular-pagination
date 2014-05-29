@@ -18,4 +18,8 @@ angular
         };
 
         pagination.setCurrent(1);
-    })
+
+        $scope.$watchCollection('[pagination.startPage, pagination.maxNumbers, pagination.itemsCount, pagination.itemsPerPage]', function() {
+            pagination.setCurrent(pagination.currentPage);
+        });
+    });

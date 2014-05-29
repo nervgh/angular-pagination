@@ -9,10 +9,8 @@ angular
     .value('paginationOptions', {
         itemsPerPage: 10,
         itemsCount: 100,
-        currentPage: 1,
-        startPage: 1,
         maxNumbers: 5,
-        pages: []
+        startPage: 1
     })
 
 
@@ -25,6 +23,9 @@ angular
         function Pagination(options) {
             var defaults = angular.copy(paginationOptions);
             angular.extend(this, defaults, options);
+            this.currentPage = null;
+            this.endPage = null;
+            this.pages = [];
             this._lastPage = null;
         }
 
@@ -34,9 +35,16 @@ angular
          */
         Pagination.prototype.setCurrent = function(page) {
             this.endPage = this._getMaxPage();
-            this.currentPage = this._fixPage(page);
+            this.currentPage = this._fixPage(Math.floor(page));
             this._change(this.currentPage);
             this._updatePages();
+        };
+        /**
+         * Offsets current page by "shift" pages
+         * @param {Number} shift
+         */
+        Pagination.prototype.shiftCurrent = function(shift) {
+            this.setCurrent(this.currentPage + shift);
         };
         /**
          * Returns "true" if page is current
@@ -45,6 +53,15 @@ angular
          */
         Pagination.prototype.isCurrent = function(page) {
             return this.currentPage === page;
+        };
+        /**
+         * Returns "true" if shift is invalid
+         * @param {Number} shift
+         * @returns {boolean}
+         */
+        Pagination.prototype.isInvalidShift = function(shift) {
+            var index = this.currentPage + shift;
+            return this.startPage > index || this.endPage < index;
         };
         /**
          * Returns "true" if page is first
@@ -69,7 +86,7 @@ angular
         Pagination.prototype.onChange = function(page) {
         };
         /**
-         * Fixs number of page if it outside range
+         * Fixes number of page if it outside range
          * @param {Number} page
          * @returns {number}
          * @private
@@ -85,7 +102,7 @@ angular
          * @private
          */
         Pagination.prototype._getMaxPage = function() {
-            return Math.floor(this.itemsCount / this.itemsPerPage);
+            return Math.ceil(this.itemsCount / this.itemsPerPage);
         };
         /**
          * Calls "onChange" if number of page was changed
@@ -108,19 +125,12 @@ angular
             var end = Math.min(start + this.maxNumbers - 1, this.endPage);
 
             start = this.endPage === end ? end - (this.maxNumbers - 1) : start;
+            start = Math.max(start, this.startPage);
             this.pages.length = 0;
 
             for(var i = start; i <= end; i++) {
                 this.pages.push(i);
             }
-        };
-        /**
-         * Returns "true" if value is instance of Pagination
-         * @param value
-         * @returns {Boolean}
-         */
-        Pagination.isPagination = function(value) {
-            return value instanceof Pagination;
         };
         /**
          * Creates and returns a pagination object
@@ -132,19 +142,4 @@ angular
         };
 
         return Pagination;
-    }])
-
-
-    .directive('nvPagination', ['Pagination', function(Pagination) {
-        return {
-            templateUrl: '/demo/angular-pagination/tpl.html',
-            link: function(scope, element, attributes) {
-                var object = scope.$eval(attributes.nvPagination);
-
-                if (!Pagination.isPagination(object)) {
-                    throw new TypeError('Object must be an instance of Pagination');
-                }
-            }
-        };
     }]);
-
