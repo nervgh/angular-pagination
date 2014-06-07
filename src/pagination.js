@@ -34,17 +34,10 @@ angular
          * @param {Number} page
          */
         Pagination.prototype.setCurrent = function(page) {
-            this.endPage = this._getMaxPage();
+            this.endPage = Math.ceil(this.itemsCount / this.itemsPerPage);
             this.currentPage = this._fixPage(Math.floor(page));
             this._change(this.currentPage);
             this._updatePages();
-        };
-        /**
-         * Offsets current page by "shift" pages
-         * @param {Number} shift
-         */
-        Pagination.prototype.shiftCurrent = function(shift) {
-            this.setCurrent(this.currentPage + shift);
         };
         /**
          * Returns "true" if page is current
@@ -55,13 +48,12 @@ angular
             return this.currentPage === page;
         };
         /**
-         * Returns "true" if shift is invalid
-         * @param {Number} shift
+         * Returns "true" if page inside of range
+         * @param {Number} page
          * @returns {boolean}
          */
-        Pagination.prototype.isInvalidShift = function(shift) {
-            var index = this.currentPage + shift;
-            return this.startPage > index || this.endPage < index;
+        Pagination.prototype.inRange = function(page) {
+            return this.startPage <= page && this.endPage >= page;
         };
         /**
          * Returns "true" if page is first
@@ -95,14 +87,6 @@ angular
             page = Math.min(page, this.endPage);
             page = Math.max(page, this.startPage);
             return page;
-        };
-        /**
-         * Returns max page number
-         * @returns {Number}
-         * @private
-         */
-        Pagination.prototype._getMaxPage = function() {
-            return Math.ceil(this.itemsCount / this.itemsPerPage);
         };
         /**
          * Calls "onChange" if number of page was changed
