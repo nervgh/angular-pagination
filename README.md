@@ -32,8 +32,10 @@ angular
     </ul>
 </div>
 ```
-See [demo](http://nervgh.github.io/pages/angular-pagination/examples/) of full functionality
+See [demo](http://nervgh.github.io/pages/angular-pagination/examples/base) of full functionality
 
 
 ## Demos
-1. [Example](http://nervgh.github.io/pages/angular-pagination/examples/) of full functionality
+1. [Example of full functionality](http://nervgh.github.io/pages/angular-pagination/examples/base)
+2. [Example of directive 1](http://nervgh.github.io/pages/angular-pagination/examples/directive-1)
+3. [Example of directive 2](http://nervgh.github.io/pages/angular-pagination/examples/directive-2)

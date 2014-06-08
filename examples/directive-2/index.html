@@ -9,7 +9,7 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script src="https://code.angularjs.org/1.2.9/angular.min.js"></script>
     <!-- example -->
-    <script src="../angular-pagination.js"></script>
+    <script src="../../angular-pagination.js"></script>
     <script src="scripts.js"></script>
 </head>
 <body ng-controller="AppController">
@@ -23,7 +23,9 @@
                     <li class="active dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Demos<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li class="active"><a href="#">Example</a></li>
+                            <li><a href="/examples/base">Base</a></li>
+                            <li><a href="/examples/directive-1">Directive-1</a></li>
+                            <li class="active"><a href="#">Directive-2</a></li>
                         </ul>
                     </li>
                     <li><a href="https://github.com/nervgh/angular-pagination">View on Github</a></li>
@@ -35,18 +37,7 @@
             <div class="col-md-9">
                 <h1>Pagination</h1>
                 <hr/>
-                <div>
-                    <code>itemsPerPage</code>: <input type="number" ng-model="pagination.itemsPerPage"/><br/>
-                    <code>itemsCount</code>: <input type="number" ng-model="pagination.itemsCount"/><br/>
-                    <code>maxNumbers</code>: <input type="number" ng-model="pagination.maxNumbers"/><br/>
-                    <code>startPage</code>: <input type="number" ng-model="pagination.startPage"/><br/>
-                </div>
-                <br/>
-                <pre>Page: <span ng-bind="pagination.currentPage"></span> / <span ng-bind="pagination.endPage"></span></pre>
-                <div ng-include="'tpl-1.html'"></div>
-                <div ng-include="'tpl-2.html'"></div>
-                <div ng-include="'tpl-3.html'"></div>
-                <div ng-include="'tpl-4.html'"></div>
+                <div ng-pagination="onPageChange"></div>
             </div>
             <div class="col-md-3"></div>
         </div>
