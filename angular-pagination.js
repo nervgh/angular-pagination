@@ -1,5 +1,5 @@
 /*
- angular-pagination v0.2.1
+ angular-pagination v0.2.2
  https://github.com/nervgh/angular-pagination
 */
 
@@ -14,7 +14,8 @@ angular
         itemsPerPage: 10,
         itemsCount: 100,
         maxNumbers: 5,
-        startPage: 1
+        startPage: 1,
+        currentPage: 1
     })
 
 
@@ -27,10 +28,10 @@ angular
         function Pagination(options) {
             var defaults = angular.copy(paginationOptions);
             angular.extend(this, defaults, options);
-            this.currentPage = null;
             this.endPage = null;
             this.pages = [];
             this._lastPage = null;
+            this.setCurrent(this.currentPage);
         }
 
         /**

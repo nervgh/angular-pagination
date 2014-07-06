@@ -10,7 +10,8 @@ angular
         itemsPerPage: 10,
         itemsCount: 100,
         maxNumbers: 5,
-        startPage: 1
+        startPage: 1,
+        currentPage: 1
     })
 
 
@@ -23,10 +24,10 @@ angular
         function Pagination(options) {
             var defaults = angular.copy(paginationOptions);
             angular.extend(this, defaults, options);
-            this.currentPage = null;
             this.endPage = null;
             this.pages = [];
             this._lastPage = null;
+            this.setCurrent(this.currentPage);
         }
 
         /**
